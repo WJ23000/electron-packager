@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
+const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -184,6 +185,53 @@ function setWindowMenu() {
   Menu.setApplicationMenu(menu)
 }
 
+// 系统托盘菜单
+function trayMenu() {
+  //系统托盘右键菜单
+  let trayMenuTemplate = [
+    {
+      label: '设置',
+      click: function () { } //打开相应页面
+    },
+    {
+      label: '帮助',
+      click: function () { }
+    },
+    {
+      label: '关于',
+      click: function () { }
+    },
+    {
+      label: '退出',
+      click: function () {
+        app.quit();
+      }
+    }
+  ];
+
+
+  // appTray = new Tray(path.join(__dirname, 'favicon.ico')); // favicon.ico是img目录下的ico文件
+  const trayIcon = path.join(__dirname, 'favicon.ico') // __dirname为主进程执行的同级目录
+  appTray = new Tray(nativeImage.createFromPath(trayIcon))
+
+
+  //图标的上下文菜单
+  const contextMenu = Menu.buildFromTemplate(trayMenuTemplate);
+
+  //设置此托盘图标的悬停提示内容
+  appTray.setToolTip('Tesco商城后台管理系统');
+
+  //设置此图标的上下文菜单
+  appTray.setContextMenu(contextMenu);
+
+  //单击右下角小图标显示应用
+  appTray.on('click', function () {
+    mainWindow.show();
+  })
+
+}
+
+
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -191,7 +239,6 @@ function createWindow() {
     height: 800, // 初始化高度
     minWidth: 800, // 最小宽度
     minHeight: 400, // 最小高度
-    skipTaskbar: true, // 是否在任务栏中显示窗口
     autoHideMenuBar: false, // 自动隐藏菜单栏
     webPreferences: { // 网页功能的设置
       nodeIntegration: true // 是否集成Node
@@ -205,6 +252,7 @@ function createWindow() {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+  trayMenu()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

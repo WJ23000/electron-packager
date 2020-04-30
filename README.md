@@ -36,4 +36,6 @@ npm run package
 
 3）Electron开发手册：https://electronjs.org/docs
 
-3）Electron BrowserWindow对象开发文档：https://www.electronjs.org/docs/api/browser-window
+4）Electron BrowserWindow对象开发文档：https://www.electronjs.org/docs/api/browser-window
+
+5) Electron Menu对象开发文档: https://www.electronjs.org/docs/api/menu
