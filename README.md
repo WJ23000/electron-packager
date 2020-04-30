@@ -38,4 +38,4 @@ npm run package
 
 4）Electron BrowserWindow对象开发文档：https://www.electronjs.org/docs/api/browser-window
 
-5) Electron Menu对象开发文档: https://www.electronjs.org/docs/api/menu
+5）Electron Menu对象开发文档: https://www.electronjs.org/docs/api/menu
