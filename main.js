@@ -1,12 +1,9 @@
-// Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
 const path = require('path')
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-// 设置菜单栏
+// 自定义菜单栏
 function setWindowMenu() {
   let menuTemplate = [
     {
@@ -185,9 +182,9 @@ function setWindowMenu() {
   Menu.setApplicationMenu(menu)
 }
 
-// 系统托盘菜单
+// 自定义系统托盘菜单
 function trayMenu() {
-  //系统托盘右键菜单
+  // 系统托盘右键菜单
   let trayMenuTemplate = [
     {
       label: '设置',
@@ -209,31 +206,28 @@ function trayMenu() {
     }
   ];
 
-
   // appTray = new Tray(path.join(__dirname, 'favicon.ico')); // favicon.ico是img目录下的ico文件
   const trayIcon = path.join(__dirname, 'favicon.ico') // __dirname为主进程执行的同级目录
   appTray = new Tray(nativeImage.createFromPath(trayIcon))
 
-
-  //图标的上下文菜单
+  // 图标的上下文菜单
   const contextMenu = Menu.buildFromTemplate(trayMenuTemplate);
 
-  //设置此托盘图标的悬停提示内容
+  // 设置此托盘图标的悬停提示内容
   appTray.setToolTip('Tesco商城后台管理系统');
 
-  //设置此图标的上下文菜单
+  // 设置此图标的上下文菜单
   appTray.setContextMenu(contextMenu);
 
-  //单击右下角小图标显示应用
+  // 单击右下角小图标显示应用
   appTray.on('click', function () {
     mainWindow.show();
   })
-
 }
 
 
 function createWindow() {
-  // Create the browser window.
+  // 创建窗口对象
   mainWindow = new BrowserWindow({
     width: 1200, // 初始化宽度
     height: 800, // 初始化高度
@@ -245,50 +239,40 @@ function createWindow() {
     }
   })
 
-  // and load the index.html of the app.
+  // 打开窗口页面
   mainWindow.loadFile('dist/index.html') // 打开本地html文件
-
   // mainWindow.loadURL('https://www.baidu.com/'); // 打开外链
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  // 最小化到托盘
   trayMenu()
 
-  // Emitted when the window is closed.
+  // 窗口关闭时触发
   mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     mainWindow = null
   })
 }
 
 
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// 监听初始化方法
 app.on('ready', () => {
+  // 自定义菜单栏
   setWindowMenu()
+  // 创建窗口
   createWindow()
 })
 
-// Quit when all windows are closed.
+
+// 监听窗口右上角关闭功能
 app.on('window-all-closed', function () {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
+
+// 监听活动事件
 app.on('activate', function () {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
