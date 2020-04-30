@@ -246,7 +246,7 @@ function createWindow() {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html') // 打开本地html文件
+  mainWindow.loadFile('dist/index.html') // 打开本地html文件
 
   // mainWindow.loadURL('https://www.baidu.com/'); // 打开外链
 
