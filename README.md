@@ -2,15 +2,15 @@
 
 # 技术栈
 
-> vue+element-ui+axios+es6+webpack+electron
+> electron+electron-packager
 
 ## 运行
 
 ```bash
 # Clone this repository
-git clone https://github.com/WJ23000/electron-tesco-admin.git
+https://github.com/WJ23000/electron-packager.git
 # Go into the repository
-cd electron-tesco-admin
+cd electron-packager
 # Install dependencies
 npm install
 # Run the app
