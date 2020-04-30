@@ -1,0 +1,25 @@
+{
+  "name": "electron-tesco-admin",
+  "productName": "Tesco商城后台管理系统",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager ./ --win --out ./outapp --arch=x64 --electron-version=4.0.5 --icon=favicon.ico --asar"
+  },
+  "repository": "https://github.com/WJ23000/electron-tesco-admin.git",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^4.0.5",
+    "electron-packager": "^13.1.0"
+  }
+}
