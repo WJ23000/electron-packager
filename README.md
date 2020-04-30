@@ -2,7 +2,7 @@
 
 # 技术栈
 
-> electron+electron-packager
+> Electron+Electron-Packager
 
 ## 运行
 
