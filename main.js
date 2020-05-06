@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
+const { app, BrowserWindow, Menu, Tray, nativeImage, dialog, shell } = require('electron')
 const path = require('path')
 
 let mainWindow
@@ -92,7 +92,7 @@ function setWindowMenu() {
                 buttons: ['好的'],
                 message: '此演示用于 "菜单" 部分, 展示如何在应用程序菜单中创建可点击的菜单项.'
               }
-              electron.dialog.showMessageBox(focusedWindow, options, function () { })
+              dialog.showMessageBox(focusedWindow, options, function () { })
             }
           }
         }
@@ -141,43 +141,13 @@ function setWindowMenu() {
       submenu: [{
         label: '学习更多',
         click: function () {
-          electron.shell.openExternal('http://electron.atom.io')
+          // 在浏览器中打开网址
+          shell.openExternal('https://www.electronjs.org/')
         }
       }]
-    }]
+    }
+  ]
 
-  function addUpdateMenuItems(items, position) {
-    if (process.mas) return
-
-    const version = electron.app.getVersion()
-    let updateItems = [
-      {
-        label: `Version ${version}`,
-        enabled: false
-      }, {
-        label: '正在检查更新',
-        enabled: false,
-        key: 'checkingForUpdate'
-      }, {
-        label: '检查更新',
-        visible: false,
-        key: 'checkForUpdate',
-        click: function () {
-          require('electron').autoUpdater.checkForUpdates()
-        }
-      }, {
-        label: '重启并安装更新',
-        enabled: true,
-        visible: false,
-        key: 'restartToUpdate',
-        click: function () {
-          require('electron').autoUpdater.quitAndInstall()
-        }
-      }
-    ]
-
-    items.splice.apply(items, [position, 0].concat(updateItems))
-  }
   let menu = Menu.buildFromTemplate(menuTemplate)
   Menu.setApplicationMenu(menu)
 }
@@ -192,11 +162,17 @@ function trayMenu() {
     },
     {
       label: '帮助',
-      click: function () { }
+      click: function () { 
+        // 在浏览器中打开网址
+        shell.openExternal('https://www.electronjs.org/')
+      }
     },
     {
       label: '关于',
-      click: function () { }
+      click: function () {
+        // 在浏览器中打开网址
+        shell.openExternal('https://github.com/WJ23000/electron-packager')
+       }
     },
     {
       label: '退出',
@@ -206,7 +182,7 @@ function trayMenu() {
     }
   ];
 
-  // appTray = new Tray(path.join(__dirname, 'favicon.ico')); // favicon.ico是img目录下的ico文件
+  // 设置托盘图标
   const trayIcon = path.join(__dirname, 'favicon.ico') // __dirname为主进程执行的同级目录
   appTray = new Tray(nativeImage.createFromPath(trayIcon))
 
